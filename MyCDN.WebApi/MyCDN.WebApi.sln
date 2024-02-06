@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34408.163
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCDN.WebApi", "MyCDN.WebApi\MyCDN.WebApi.csproj", "{7CEBB58E-94F0-467E-A3AB-C63B329F3135}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCDN.Core", "..\MyCDN.Core\MyCDN.Core\MyCDN.Core.csproj", "{698E122D-A23A-4330-B0A2-7162D15443DD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CEBB58E-94F0-467E-A3AB-C63B329F3135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CEBB58E-94F0-467E-A3AB-C63B329F3135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CEBB58E-94F0-467E-A3AB-C63B329F3135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CEBB58E-94F0-467E-A3AB-C63B329F3135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{698E122D-A23A-4330-B0A2-7162D15443DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{698E122D-A23A-4330-B0A2-7162D15443DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{698E122D-A23A-4330-B0A2-7162D15443DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{698E122D-A23A-4330-B0A2-7162D15443DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E7193A0-35F0-4F57-93A6-6D32D407E463}
+	EndGlobalSection
+EndGlobal

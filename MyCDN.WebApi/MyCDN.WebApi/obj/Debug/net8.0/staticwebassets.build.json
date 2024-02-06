@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "039ZFvzcPpMpq403oAMW5G3yjuNAGJbIRO2CtFQ9dHw=",
+  "Source": "MyCDN.WebApi",
+  "BasePath": "_content/MyCDN.WebApi",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
