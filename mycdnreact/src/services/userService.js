@@ -1,11 +1,13 @@
+// services/userService.js
 import axios from 'axios';
 
-const API_BASE_URL = process.env.REACT_APP_API_ENDPOINT;
+const API_BASE_URL = process.env.REACT_APP_API_ENDPOINT || 'https://localhost:7148';
 
 const userService = {
   // Kullanıcı listesini getir
   getUserList: async () => {
     try {
+      console.log("API Endpoint:", API_BASE_URL);
       const response = await axios.get(`${API_BASE_URL}/api/users`);
       return response.data;
     } catch (error) {
@@ -42,7 +44,6 @@ const userService = {
     }
   },
 
-
   // Kullanıcı kotalarını getir
   getUserQuotas: async (userId) => {
     try {
@@ -57,6 +58,16 @@ const userService = {
   updateUserQuotas: async (userId, quotas) => {
     try {
       const response = await axios.put(`${API_BASE_URL}/api/users/${userId}/quotas`, quotas);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  // Yeni kullanıcı oluştur
+  kullaniciOlustur: async (kullaniciBilgileri) => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/api/kullaniciOlustur`, kullaniciBilgileri);
       return response.data;
     } catch (error) {
       throw error;

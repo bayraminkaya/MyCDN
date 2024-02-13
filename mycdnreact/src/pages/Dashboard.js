@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Modal, Form, Input, message } from 'antd';
+import { Button, Modal, Form, Input, message, Card, Typography } from 'antd';
 import userService from '../services/userService';
 import axios from 'axios';
 import DosyaPage from './DosyaPage';
 import { useDosya } from '../contexts/DosyaContext';
-import { Link } from 'react-router-dom';
+import ApiKeyPage from './ApiKeyPage'; 
+
+const { Meta } = Card;
+const { Title } = Typography;
 
 const Dashboard = () => {
   const [userFiles, setUserFiles] = useState([]);
@@ -13,19 +16,20 @@ const Dashboard = () => {
   const [userQuotas, setUserQuotas] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { uploadFile, deleteFile } = useDosya(); 
+  const { uploadFile, deleteFile, kullaniciOlustur } = useDosya();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userListResponse = await userService.getUserList();
         const firstUser = userListResponse[0];
+
         const userId = firstUser.id;
 
         const [info, roles, quotas] = await Promise.all([
           userService.getUserInfo(userId),
           userService.getUserRoles(userId),
-          userService.getUserQuotas(userId)
+          userService.getUserQuotas(userId),
         ]);
 
         setUserInfo(info);
@@ -82,43 +86,48 @@ const Dashboard = () => {
     setModalVisible(false);
   };
 
+  const handleKullaniciOlustur = () => {
+    kullaniciOlustur({ role: 'KULLANICI_ROL_ADI' }); // Kullanıcı rol adını belirtin
+  };
+
   return (
-    <div>
-      <h1>Dashboard Page</h1>
-      <h2>Kullanıcı Bilgileri</h2>
-      <p>Kullanıcı Adı: {userInfo.username}</p>
-      <p>Email: {userInfo.email}</p>
-      <h2>Kullanıcı Roller</h2>
-      <h2>Dosya İşlemleri</h2>
-      
-      
-      
-      <input type="file" onChange={(e) => uploadFile(e.target.files[0])} />
-      <ul>
-        {userFiles.map((file) => (
-          <li key={file.id}>
-            Dosya Adı: {file.name}, Boyut: {file.size} KB
-            <button onClick={() => handleDelete(file.id)}>Dosyayı Sil</button>
-          </li>
-        ))}
-      </ul>
-      
+    <div style={{ maxWidth: 800, minWidth: 700, margin: 'auto', padding: 20, backgroundColor: '#f0f5ff', borderRadius: 8, boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+      <h1 style={{ color: '#1890ff', textAlign: 'center' }}>Dashboard Page</h1>
+
+      <section style={{ marginBottom: 20 }}>
+        <h2 style={{ color: '#1890ff' }}>Kullanıcı Bilgileri</h2>
+        <p><strong>Kullanıcı Adı:</strong> {userInfo.username}</p>
+        <p><strong>Email:</strong> {userInfo.email}</p>
+      </section>
+
+      <section style={{ marginBottom: 20 }}>
+        <h2 style={{ color: '#1890ff' }}>Kullanıcı Roller</h2>
+        <ul>
+          {userRoles.map((role) => (
+            <li key={role.id} style={{ color: '#1890ff' }}>
+              {role.name} - {role.description}
+            </li>
+          ))}
+        </ul>
+      </section>
+
       <DosyaPage
         userFiles={userFiles}
         uploadFile={uploadFile}
         deleteFile={handleDelete}
       />
-      <ul>
-        {userRoles.map((role) => (
-          <li key={role.id}>{role.name}</li>
-        ))}
-      </ul>
-      <h2>Kullanıcı Kotaları</h2>
-      <p>Toplam Alan: {userQuotas.totalSpace} KB</p>
-      <p>Kullanılan Alan: {userQuotas.usedSpace} KB</p>
-      <Button type="primary" onClick={showUpdateQuotasModal}>
-        Kotaları Güncelle
-      </Button>
+
+      <section style={{ marginBottom: 20, textAlign: 'center' }}>
+        <h2 style={{ color: '#1890ff' }}>Kullanıcı Kotaları</h2>
+        <Card title={<Title level={4} style={{ color: '#000' }}>Kota Alanı</Title>} style={{ width: 500, margin: 'auto', color: '#000', backgroundColor: '#D3D3D3', borderRadius: 8, boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+          <p><strong>Toplam Alan:</strong> {userQuotas.totalSpace} KB</p>
+          <p><strong>Kullanılan Alan:</strong> {userQuotas.usedSpace} KB</p>
+          <Button type="primary" onClick={showUpdateQuotasModal} style={{ backgroundColor: '#1890ff', borderColor: '#1890ff' }}>
+            Kotaları Güncelle
+          </Button>
+        </Card>
+      </section>
+
       <Modal
         title="Kotaları Güncelle"
         open={modalVisible}
@@ -142,20 +151,27 @@ const Dashboard = () => {
             <Input type="number" />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" style={{ backgroundColor: '#1890ff', borderColor: '#1890ff' }}>
               Güncelle
             </Button>
           </Form.Item>
         </Form>
       </Modal>
-      <h2>Kullanıcı Dosyaları</h2>
-      <ul>
-        {userFiles.map((file) => (
-          <li key={file.id}>
-            Dosya Adı: {file.name}, Boyut: {file.size} KB
-          </li>
-        ))}
-      </ul>
+              
+      <section>
+        <h2 style={{ color: '#1890ff', textAlign: 'center' }}>Kullanıcı Dosyaları</h2>
+        <ul>
+          {userFiles.map((file) => (
+            <li key={file.id}>
+              <span style={{ marginRight: 10 }}><strong>Dosya Adı:</strong> {file.name},</span>
+              <span style={{ marginRight: 10 }}><strong>Boyut:</strong> {file.size} KB</span>
+            </li>
+          ))}
+        </ul>
+      </section>
+      <section>
+      <ApiKeyPage />
+      </section>
     </div>
   );
 };

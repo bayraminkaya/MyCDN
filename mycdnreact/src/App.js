@@ -24,8 +24,8 @@ const App = () => {
     <KotaProvider>
       <UserProvider value={{ user, handleLogin, handleLogout }}>
         <DosyaProvider>
-          <div className="App">
-            <header className="App-header">
+          <div className="App"style={{ height: '130vh',display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#162438' }}>
+            <header className="App-header" >
               {user && user.role === 'admin' ? (
                 <AdminDashboard onLogout={handleLogout} />
               ) : user && user.role === 'user' ? (
