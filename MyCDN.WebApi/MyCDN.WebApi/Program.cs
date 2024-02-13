@@ -1,8 +1,8 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-var builder = WebApplication.CreateBuilder(args);
 
+var builder = WebApplication.CreateBuilder(args);
 
 var key = Encoding.ASCII.GetBytes("my-secret-key"); // Deðiþtirilmeli: Güçlü bir anahtar kullanýlmalýdýr.
 builder.Services.AddAuthentication(x =>
@@ -25,7 +25,15 @@ builder.Services.AddAuthentication(x =>
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
-    
+});
+
+// CORS Politikasýný ekleyin
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        builder => builder.WithOrigins("http://localhost:3000") // React uygulamanýzýn adresini ekleyin
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
 });
 
 builder.Services.AddControllers();
@@ -38,6 +46,7 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    app.UseCors("AllowReactApp"); // CORS Politikasýný ekleyin
     app.UseSwagger();
     app.UseSwaggerUI();
 }
